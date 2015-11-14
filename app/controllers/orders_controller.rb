@@ -5,6 +5,11 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
+    respond_to do |format|
+      msg = { :orders => @orders }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end
+    
   end
 
   # GET /orders/1

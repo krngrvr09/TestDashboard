@@ -5,6 +5,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    respond_to do |format|
+      msg = { :users => @users }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end
+    
   end
 
   # GET /users/1
