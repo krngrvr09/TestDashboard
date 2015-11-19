@@ -12,6 +12,32 @@ class UsersController < ApplicationController
     
   end
 
+  def get_id
+    email = params[:email]
+    name = params[:name]
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    puts name
+    puts email
+    user = User.where(:email=>email).first
+    result = -1
+    if user
+      result = user.id
+      puts result
+    else
+      user_params={}
+      user_params['name'] = name
+      user_params['email'] = email      
+      new_user = User.new(user_params)
+      if new_user.save
+        result = new_user.id
+      end
+    end
+    respond_to do |format|
+      msg = { :id => result }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
