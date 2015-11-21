@@ -6,8 +6,7 @@ class OrdersController < ApplicationController
   def index
     @orders = Order.all
     respond_to do |format|
-      msg = { :orders => @orders }
-      format.json  { render :json => msg } # don't do msg.to_json
+	format.json  { render :json => { :orders => @orders.as_json(:include => :items) } } # don't do msg.to_json
     end
     
   end
@@ -15,6 +14,12 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+	 @order = Order.find(params[:id])
+    respond_to do |format|
+
+      
+      format.json  { render :json => { :orders => @order.as_json(:include => :items) } } # don't do msg.to_json
+    end
   end
 
   # GET /orders/new
