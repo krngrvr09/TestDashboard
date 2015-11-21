@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
   def index
     @orders = Order.all
     respond_to do |format|
+
 	format.json  { render :json => { :orders => @orders.as_json(:include => :items) } } # don't do msg.to_json
     end
     
@@ -20,6 +21,7 @@ class OrdersController < ApplicationController
       
       format.json  { render :json => { :orders => @order.as_json(:include => :items) } } # don't do msg.to_json
     end
+
   end
 
   # GET /orders/new
@@ -36,14 +38,15 @@ class OrdersController < ApplicationController
   def create
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     puts order_params
+    puts order_params[:items]
     @order = Order.new(order_params)
-    @order.user = User.find(1)
-    @order.items << Item.find(1)
+    # @order.user = User.find(1)
+    # @order.items << Item.find(1)
 
     respond_to do |format|
       if @order.save
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json { render :show, status: :created, location: @order }
+        format.json  { render :json => { :orders => @order.as_json(:include => :items) } } # don't do msg.to_json
       else
         format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
@@ -83,6 +86,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:status)
+      params.permit(:status,:paid,:payment_status,:user_id,:cost,:items)
     end
 end
