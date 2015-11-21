@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   # Example of regular route:
   # scope :format => true, :constraints => { :format => 'json' } do
     get 'get_id/' => 'users#get_id', :defaults => { :format => 'json' }
-    get 'set_gcm/' => 'users#set_gcm', :defaults => { :format => 'json' }
+    get 'get_orders/' => 'users#get_orders', :defaults => { :format => 'json' }
+    post 'set_gcm/' => 'users#set_gcm', :defaults => { :format => 'json' }
+    post 'order_complete/' => 'orders#order_complete', :defaults => { :format => 'json' }
   # end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

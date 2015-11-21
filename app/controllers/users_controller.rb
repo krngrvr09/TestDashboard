@@ -12,20 +12,34 @@ class UsersController < ApplicationController
     
   end
 
+  def get_orders
+    user_id = params[:user_id]
+    user = User.find(user_id)
+    if user
+      respond_to do |format|
+      msg = { :orders => user.orders }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end
+    end
+
+  end
+
   def set_gcm
     require 'gcm'
     user_id = params[:user_id]
     reg_id = params[:reg_id]
     user = User.find(user_id)
     if user
-      gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
+      # gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
       # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
-      registration_ids= [reg_id] # an array of one or more client registration IDs
-      options = {data: {score: "123"}, collapse_key: "updated_score"}
-      response = gcm.send(registration_ids, options)
-      puts response
+      user.reg_id = reg_id
+      user.save
+      # registration_ids= [reg_id] # an array of one or more client registration IDs
+      # options = {data: {score: "123"}, collapse_key: "updated_score"}
+      # response = gcm.send(registration_ids, options)
+      # puts response
       respond_to do |format|
-        msg = { :response => response }
+        msg = { :response => "ok" }
       format.json  { render :json => msg } # don't do msg.to_json
     end
 
