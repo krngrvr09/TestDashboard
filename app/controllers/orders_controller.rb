@@ -37,9 +37,17 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    puts order_params
-    puts order_params[:items]
-    @order = Order.new(order_params)
+    a = order_params
+    
+    puts "lolol"+a.to_s
+    # order_params[:items] = order_params[:items].split(",")
+    @order = Order.new(a.except(:items))
+    puts"array"
+    b =a[:items].split(",")
+    # puts b
+    b.each do |i|
+      @order.items << Item.find(i)
+    end
     # @order.user = User.find(1)
     # @order.items << Item.find(1)
 
