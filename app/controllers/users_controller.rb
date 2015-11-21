@@ -45,7 +45,6 @@ class UsersController < ApplicationController
     puts email
     puts "6"
     user = User.where(:email=>email).first
-<<<<<<< HEAD
     result = {}
     final = []
     if user

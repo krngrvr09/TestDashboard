@@ -42,7 +42,7 @@ class OrdersController < ApplicationController
     puts "lolol"+a.to_s
     # order_params[:items] = order_params[:items].split(",")
     @order = Order.new(a.except(:items))
-    puts"array"
+    puts"array"+a[:items]
     b =a[:items].split(",")
     # puts b
     b.each do |i|
