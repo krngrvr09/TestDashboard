@@ -77,6 +77,33 @@ class OrdersController < ApplicationController
     end
   end
 
+  def order_complete
+    require 'gcm'
+    order_id = params[:order_id]
+    # reg_id = params[:reg_id]
+    order = Order.find(order_id)
+    response = "order not found"
+    if order
+      user_id = order.user_id
+      user = User.find(user_id)
+      response = "user not found"
+      if user
+        reg_id = user.reg_id
+        gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
+        # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
+        registration_ids= [reg_id] # an array of one or more client registration IDs
+        options = {data: {score: "123"}, collapse_key: "updated_score"}
+        response = gcm.send(registration_ids, options)
+        puts response  
+      end
+    end
+    respond_to do |format|
+      msg = { :response => response }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end  
+  end
+
+
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
