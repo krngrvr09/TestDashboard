@@ -29,6 +29,7 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
+    puts item_params
     @item = Item.new(item_params)
 
     respond_to do |format|
@@ -74,6 +75,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.permit(:name, :price, :quantity)
+      params.permit(:name, :price, :quantity, :image, :rating, :contents)
     end
 end
