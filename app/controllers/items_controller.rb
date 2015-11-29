@@ -29,8 +29,8 @@ class ItemsController < ApplicationController
       item_id = params[:item_id]
       item = Item.find(item_id)
       if item
-        #reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
-        reg_id=" elA5YVlT6s8:APA91bFH52_JycndajW2JrFNMTtx_zlAOBkNumuAC2_4Y6sygyJbP5MK5TlUaNmVfhJIbec0fKaZC0KNBtW72Y0vSkekFzSN_j9Szno2qYYmSsYdFNA4801hJwAMPvhxCjInqOO2niRr"
+        reg_id = "e8qP5arN9uM:APA91bHt-LIGSNEY0iZdN8-uef0fI0mbBTk_Rrq7LwPfkkuLPSX-SUOH5iscY4jJ7jzFB-he0xTLDH4u8GOAvVCJOllei2ZlVOH8BL6nTyJ_hj674EaOP8ckOwMjhLOJBXOedQO_rHfH"#user.reg_id
+        # reg_id="d3wjxDw2D2I:APA91bHch4up89ZVYtNtw6eM3eXMAjKbVXjsSS1Q1FvVx9jbsyBfXq252cEQMwFweedsGJKswGS-exzxQu4fVclcSm1UcwApW8bUCrn_p15fVuofj21PKzU_p8lQPAXo73umrbGdukjO"
           gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
           # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
           registration_ids= [reg_id] # an array of one or more client registration IDs
@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     respond_to do |format|
       if @item.save
-        reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
+        reg_id = "e8qP5arN9uM:APA91bHt-LIGSNEY0iZdN8-uef0fI0mbBTk_Rrq7LwPfkkuLPSX-SUOH5iscY4jJ7jzFB-he0xTLDH4u8GOAvVCJOllei2ZlVOH8BL6nTyJ_hj674EaOP8ckOwMjhLOJBXOedQO_rHfH"#user.reg_id
         gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
         # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
         registration_ids= [reg_id] # an array of one or more client registration IDs
