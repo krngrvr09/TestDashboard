@@ -47,18 +47,12 @@ class UsersController < ApplicationController
   end
 
   def get_id
-    puts "1"
     email = params[:email]
-    puts "2"
     name = params[:name]
-    puts "3"
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    puts "4"
     puts name
-    puts "5"
     puts email
-    puts "6"
     user = User.where(:email=>email).first
+
     result = {}
     final = []
     if user
@@ -66,24 +60,16 @@ class UsersController < ApplicationController
       final.push result
       puts "user present"
       puts result
-      puts "11"
     else
-      puts "user not presen"
       user_params={}
-      puts "13"
       user_params['name'] = name
-      puts "14"
       user_params['email'] = email      
-      puts "15"
       new_user = User.new(user_params)
-      puts "16"
       if new_user.save
-        result = new_user.id
-        puts "18"
+        result["id"] = new_user.id
+	final.push result
       end
-      puts "19"
     end
-    puts "20"
     respond_to do |format|
       msg = { :user_id => final }
       format.json  { render :json => msg } # don't do msg.to_json

@@ -87,7 +87,8 @@ class OrdersController < ApplicationController
       user = User.find(user_id)
       response = "user not found"
       if user
-        reg_id = user.reg_id
+        #reg_id = user.reg_id
+	reg_id="fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"
         gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
         # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
         registration_ids= [reg_id] # an array of one or more client registration IDs
