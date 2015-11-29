@@ -52,8 +52,12 @@ class ItemsController < ApplicationController
   def create
     puts item_params
     @item = Item.new(item_params)
+    puts "!!!!!!!!!!!!!!!!!!!!"
+    puts item_params
     respond_to do |format|
       if @item.save
+        puts "@@@@@@@@@@@"
+        puts @item.as_json
         reg_id = "e8qP5arN9uM:APA91bHt-LIGSNEY0iZdN8-uef0fI0mbBTk_Rrq7LwPfkkuLPSX-SUOH5iscY4jJ7jzFB-he0xTLDH4u8GOAvVCJOllei2ZlVOH8BL6nTyJ_hj674EaOP8ckOwMjhLOJBXOedQO_rHfH"#user.reg_id
         gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
         # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
@@ -61,9 +65,12 @@ class ItemsController < ApplicationController
         options = {data: {item: @item.as_json}, collapse_key: "New_Item_Created"}
         response = gcm.send(registration_ids, options)
         puts response
+        # respond_to do |format|
+        #   format.json  { render :json => @item.as_json } # don't do msg.to_json
+        # end
     
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
-        format.json { render :show, status: :created, location: @item }
+        # format.html { redirect_to @item, notice: 'Item was successfully created.' }
+        format.json { render :json => @item.as_json }
       else
         format.html { render :new }
         format.json { render json: @item.errors, status: :unprocessable_entity }
