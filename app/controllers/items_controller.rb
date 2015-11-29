@@ -29,11 +29,12 @@ class ItemsController < ApplicationController
       item_id = params[:item_id]
       item = Item.find(item_id)
       if item
-        reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
+        #reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
+        reg_id=" elA5YVlT6s8:APA91bFH52_JycndajW2JrFNMTtx_zlAOBkNumuAC2_4Y6sygyJbP5MK5TlUaNmVfhJIbec0fKaZC0KNBtW72Y0vSkekFzSN_j9Szno2qYYmSsYdFNA4801hJwAMPvhxCjInqOO2niRr"
           gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
           # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
           registration_ids= [reg_id] # an array of one or more client registration IDs
-          options = {data: {item: @item.as_json}, collapse_key: "New_Item_Created"}
+          options = {data: {item: item.as_json}, collapse_key: "New_Item_Created"}
           response = gcm.send(registration_ids, options)
           puts response
         else
