@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
           gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
           # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
           registration_ids= [reg_id] # an array of one or more client registration IDs
-          options = {data: {item: item.as_json}, collapse_key: "New_Item_Created"}
+          options = {data: {item: item.as_json}, collapse_key: "Item"}
           response = gcm.send(registration_ids, options)
           puts response
         else
