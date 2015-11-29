@@ -7,7 +7,8 @@ class OrdersController < ApplicationController
     @orders = Order.all
     respond_to do |format|
 
-	format.json  { render :json => { :orders => @orders.as_json(:include => :items) } } # don't do msg.to_json
+
+	format.json  { render :json => { :orders => @orders.as_json(:include => :items) } } # don't do msg
     end
     
   end
@@ -18,7 +19,6 @@ class OrdersController < ApplicationController
 	 @order = Order.find(params[:id])
     respond_to do |format|
 
-      
       format.json  { render :json => { :orders => @order.as_json(:include => :items) } } # don't do msg.to_json
     end
 
@@ -48,6 +48,8 @@ class OrdersController < ApplicationController
     b.each do |i|
       @order.items << Item.find(i)
     end
+    # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    # puts  @order.as_json(:include => :items)
     # @order.user = User.find(1)
     # @order.items << Item.find(1)
 

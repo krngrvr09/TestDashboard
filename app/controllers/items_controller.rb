@@ -25,15 +25,42 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
   end
+  def new_item_notif
+      item_id = params[:item_id]
+      item = Item.find(item_id)
+      if item
+        reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
+          gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
+          # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
+          registration_ids= [reg_id] # an array of one or more client registration IDs
+          options = {data: {item: @item.as_json}, collapse_key: "New_Item_Created"}
+          response = gcm.send(registration_ids, options)
+          puts response
+        else
+          response = "item not found"
+        end
+        respond_to do |format|
+      msg = { :response => response }
+      format.json  { render :json => msg } # don't do msg.to_json
+    end  
+    
+  end
 
   # POST /items
   # POST /items.json
   def create
     puts item_params
     @item = Item.new(item_params)
-
     respond_to do |format|
       if @item.save
+        reg_id = "fHHk-8AhHJs:APA91bGUtD9I1SQMlfLu0_z89Lga6r7mc5UsiQCE6j9ZhPE2LCsBIs8z8hJb6cKshufjsu047rgMHQFpJfsH8QQR789N4ycGd6S1NJdcr7sBpixNBWttinavxMaCfgnVj2NBMk4V26Zm"#user.reg_id
+        gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
+        # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
+        registration_ids= [reg_id] # an array of one or more client registration IDs
+        options = {data: {item: @item.as_json}, collapse_key: "New_Item_Created"}
+        response = gcm.send(registration_ids, options)
+        puts response
+    
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else

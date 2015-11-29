@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'get_orders/' => 'users#get_orders', :defaults => { :format => 'json' }
     post 'set_gcm/' => 'users#set_gcm', :defaults => { :format => 'json' }
     post 'order_complete/' => 'orders#order_complete', :defaults => { :format => 'json' }
+    post 'new_item/' => 'items#new_item_notif', :defaults => { :format => 'json' }
   # end
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
