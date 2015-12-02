@@ -37,8 +37,7 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    a = order_params
-    
+    a = order_params    
     puts "lolol"+a.to_s
     # order_params[:items] = order_params[:items].split(",")
     @order = Order.new(a.except(:items))
