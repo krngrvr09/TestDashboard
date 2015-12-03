@@ -27,9 +27,12 @@ class UsersController < ApplicationController
   def set_gcm
     require 'gcm'
     user_id = params[:user_id]
+    user = User.find(user_id) 
     reg_id = params[:reg_id]
-    user = User.find(user_id)
     if user
+      puts "!!!!!!!!!!!!!!!!!!!!!1"
+      puts user.id
+    
       # gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
       # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
       user.reg_id = reg_id

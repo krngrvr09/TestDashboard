@@ -56,13 +56,15 @@ class ItemsController < ApplicationController
     puts item_params
     respond_to do |format|
       if @item.save
-        puts "@@@@@@@@@@@"
-        puts @item.as_json
-        reg_id = "e8qP5arN9uM:APA91bHt-LIGSNEY0iZdN8-uef0fI0mbBTk_Rrq7LwPfkkuLPSX-SUOH5iscY4jJ7jzFB-he0xTLDH4u8GOAvVCJOllei2ZlVOH8BL6nTyJ_hj674EaOP8ckOwMjhLOJBXOedQO_rHfH"#user.reg_id
+
+        reg_id = "d8MFDvTOJU4:APA91bErYqWUBs7xpu4cHvFNtH73Rup84rHdOzmMVCyRHeBFUgx96WFWE4q5Jhb-FvZRzMVJP6cDNufGjeafW9fBYIHeuGC-wWuiaHLY0JTrwVcFR_MW67L_Gv2gOzZBgRgMRhAwwJHt"#user.reg_id
         gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
-        # registration_ids= ["dfqivEnV2bY:APA91bHZOm7uCgGns-FvLURMImMR2Wx2X3aErkui8fdRIJHkKUBIiRoTamFJeWwHVMXt2uEjEW3WkfTa5rUrWIT_hxW_VnolvLcVZaTwC_YfE3HXM6mSSj1vzRHGa4yyiD0_PkIyCacL"] # an array of one or more client registration IDs
-        registration_ids= [reg_id] # an array of one or more client registration IDs
-        options = {data: {item: @item.as_json}, collapse_key: "New_Item_Created"}
+        registration_ids= [] # an array of one or more client registration IDs
+        User.all.each do |u|
+          registration_ids<<u.reg_id
+        end
+        # registration_ids= registration_ids#[reg_id] # an array of one or more client registration IDs
+        options = {data: {item: @item.as_json(:except=>:image)}, collapse_key: "Item"}
         response = gcm.send(registration_ids, options)
         puts response
         # respond_to do |format|

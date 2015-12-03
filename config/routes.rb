@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :order_to_items
+  resources :user_to_items
+  resources :order_map_items
+  resources :order_to_items
   resources :orders, defaults: { format: 'json' }
   resources :users, defaults: { format: 'json' }
   resources :items, defaults: { format: 'json' }

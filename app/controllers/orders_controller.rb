@@ -5,10 +5,24 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = Order.all
+    final_result=[]
+    @orders.each do |order|
+      items = order.items.split(",")
+      item_list=[]
+      items.each do |i|
+        tmp = Item.find(i)
+        if tmp
+          item_list<<tmp
+        end
+      end
+      order_result = order.as_json
+      order_result["items"] = item_list
+      final_result<<order_result
+    end
+
     respond_to do |format|
 
-
-	format.json  { render :json => { :orders => @orders.as_json(:include => :items) } } # don't do msg
+	   format.json  { render :json => { :orders => final_result } } # don't do msg
     end
     
   end
@@ -36,26 +50,34 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-    a = order_params    
-    puts "lolol"+a.to_s
-    # order_params[:items] = order_params[:items].split(",")
-    @order = Order.new(a.except(:items))
-    puts"array"+a[:items]
+    a = order_params
+    puts "a"
+    puts a
+    @order = Order.new(a)
+    puts "@order"
+    puts @order
     b =a[:items].split(",")
-    # puts b
-    b.each do |i|
-      @order.items << Item.find(i)
-    end
-    # puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    # puts  @order.as_json(:include => :items)
-    # @order.user = User.find(1)
-    # @order.items << Item.find(1)
-
+    puts "b"
+    puts b
     respond_to do |format|
       if @order.save
+        puts "@order"
+        puts @order
+        b.each do |i|
+          order_to_item = OrderToItem.new({order_id:@order.id, item_id: i})
+          puts order_to_item.save
+        end
+        reg_id = User.find(1).reg_id#user.reg_id
+        gcm = GCM.new("AIzaSyD-nMzxBqyTL8vTyV4bEq0_hBm5Y49eJ4Q")
+        registration_ids= [reg_id] # an array of one or more client registration IDs
+        # registration_ids= registration_ids#[reg_id] # an array of one or more client registration IDs
+        options = {data: {order_id: @order.id}, collapse_key: "Order"}
+        response = gcm.send(registration_ids, options)
+        puts response
+        
+    
         format.html { redirect_to @order, notice: 'Order was successfully created.' }
-        format.json  { render :json => { :orders => @order.as_json(:include => :items) } } # don't do msg.to_json
+        format.json  { render :json => { :orders => @order.as_json } } # don't do msg.to_json
       else
         format.html { render :new }
         format.json { render json: @order.errors, status: :unprocessable_entity }
